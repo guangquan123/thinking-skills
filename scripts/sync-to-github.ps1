@@ -86,10 +86,16 @@ try {
     Write-Output "本地无新改动，直接同步当前 HEAD"
   }
   $head   = ((Invoke-Git rev-parse HEAD) -join '').Trim()
+  # PowerShell 5.1 控制台默认按系统 ANSI（GBK）解码 git 输出，中文 commit 消息会被读成乱码再推上远端。
+  # 仅在读取 git log（纯 stdout、不走 stdin）时临时切换 UTF-8 解码，读完即还原——
+  # 不能全局切换：PS 5.1 在改了 OutputEncoding 后给原生命令写 stdin 有已知缺陷（credential fill 会收不到输入）。
+  $prevOutEnc = [Console]::OutputEncoding
+  [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
   $meta   = ((Invoke-Git log -1 --date=raw --format='%an%x00%ae%x00%ad%x00%cn%x00%ce%x00%cd' HEAD) -join '') -split "`0"
   # git 的 commit 消息固定以单个尾部换行存储；%B 按行捕获会丢尾部换行，这里显式补回，
   # 保证远端 commit 对象与本地逐字节一致（sha 相同）
   $msgTxt = (((Invoke-Git log -1 --format=%B HEAD) -join "`n").TrimEnd("`n")) + "`n"
+  [Console]::OutputEncoding = $prevOutEnc
   Write-Output "本地 commit=$head"
 
   # ---------- 1) 凭据 ----------

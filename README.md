@@ -1,63 +1,145 @@
 # thinking-skills
 
-DeepWorks 思维模型集合（thinking-suite）——四个思考类 skill，按"界定 → 分析 → 结论纪律"分工，边界清晰，各自可独立单点取用。
+<p align="center"><strong>想清楚一件事，不等于花很长时间想。</strong></p>
 
-## 成员与分工
+<p align="center">界定清楚、分析到位、结论带把握——三个 skill 各管一段，一个入口负责指路。</p>
 
-| 成员 | 定位 | 解决什么 | 产物 |
-|-|-|-|-|
-| [deep-thinking](deep-thinking/SKILL.md) | 思考前置层 | 下结论前该走的工序走了没 | 结论 + 置信度 + 关键假设 + 重判触发器 |
-| [problem-definition](problem-definition/SKILL.md) | 问题界定专家 | 事情到底是什么 | 三栏表 / 待问清单 / 核对话术 / 收束句 |
-| [problem-analysis](problem-analysis/SKILL.md) | 系统分析执行库 | 怎么系统分析并交付 | 分析卡（问题卡 + 证据 + 行动清单 + 验证指标） |
-| [thinking-suite](thinking-suite/SKILL.md) | 集合入口 | 路由判断与分工总览 | 路由决策树 + 歧义裁决表（不执行分析） |
+---
 
-## 路由速查
+## 🎬 这套集合解决什么问题
 
-顺序判断，命中即停：
+大多数人想不清楚事情，不是因为笨，而是因为在错误的阶段做正确的事：
 
-1. **事情没弄清**（描述模糊 / 感受事实混杂 / 刚接到他人交代）→ `problem-definition`
-2. **需要系统分析**（根因 / 拆解 / 乱材料 / 排优先级 / 方案验证 / 出汇报）→ `problem-analysis`
-3. **判断题一轮给结论**（该不该 X / X 对不对 / 你怎么看）→ `deep-thinking`
-4. **泛化"帮我分析 X"** → `deep-thinking` 默认接，兜不住时移交
-5. **集合入口与路由说明** → `thinking-suite`
+> 事情还没弄清楚，就开始分析原因；
+> 原因还没查透，就开始下结论；
+> 下了结论，又不说自己赌的是什么假设。
 
-路由规则的单一事实来源：[deep-thinking/SKILL.md](deep-thinking/SKILL.md) 的「与其他思考 skill 的协作」章节（含歧义裁决表）。
-
-## 目录结构
+thinking-skills 把"想清楚"拆成三段，每段交给一个专门的 skill：
 
 ```
-thinking-skills/
-├── README.md
-├── deep-thinking/          # SKILL.md + references/
-├── problem-definition/     # SKILL.md + references/ + templates/
-├── problem-analysis/       # SKILL.md + references/ + scripts/
-├── thinking-suite/         # SKILL.md
-└── scripts/
-    └── sync-to-github.ps1  # 本仓库同步脚本（Repo 默认 thinking-skills）
+说不清发生了什么  →  problem-definition  先把问题界定清楚
+问题清楚了要深挖  →  problem-analysis    再做系统分析
+要拍板下结论了    →  deep-thinking       最后补上结论的纪律
+不确定该用哪个    →  thinking-suite      集合入口，负责指路
 ```
 
-## 同步协议（本地工作位置 → 本仓库）
+它们不是三选一，而是一条可以接力的链，也可以各自单独用。
 
-成员的本地工作位置（skill 实际加载处）：
+## 🧭 三个 skill，各干什么
 
-| 成员 | 本地路径 |
-|-|-|
-| deep-thinking | `<workspace>/.opencode/skills/deep-thinking/` |
-| problem-definition | `~/.agents/skills/problem-definition/` |
-| problem-analysis | `~/.agents/skills/problem-analysis/` |
-| thinking-suite | `~/.agents/skills/thinking-suite/` |
+### problem-definition —— 先把事情弄清楚
 
-修改 skill 后同步到本仓库：
+**一句话：把"我觉得不对"还原成"到底发生了什么"。**
 
-1. 把成员最新文件复制到本仓库同名子目录（deep-thinking 注意排除 `.git`）
-2. 在本仓库根目录执行：
+你的老板说"把最近的客户拜访情况整理一下，周末给我"。你总觉得没说清楚，但不知道哪里没说清楚。这个 skill 会把原话拆成三栏（对方原话 / 我的理解 / 我猜的），用 5W2H 扫出所有只能靠猜的空位，最后给你一段可以直接发出去的核对话术。
 
-```powershell
-powershell -ExecutionPolicy Bypass -File ".\scripts\sync-to-github.ps1" -Message "feat: 本次更新说明"
+它有八个方法，可以只挑一个用：
+
+| 方法 | 它会帮你做什么 |
+|---|---|
+| 问题分型 | 区分发生型、潜在型、理想型，避免动作错配 |
+| 还原事实 | 把"很乱、太慢、不配合"改写成可核实的事实 |
+| 筛事实 | 从汇报、邮件、转述里分出事实、加工和观点 |
+| 5W2H 补边界 | 补齐对象、时间、范围、原因和当初的承诺依据 |
+| 5 Why 追原因 | 追到第一个只能靠猜的环节，并在那里停住 |
+| 假设反证 | 检查你想当然的假设，和补救方案的"承重墙" |
+| 目标-现状-差距 | 把"要不要换 X"改成可验证的差距问题 |
+| 向上沟通 | 输出三行同步、追问预案和汇报前准备清单 |
+
+### problem-analysis —— 然后系统地分析
+
+**一句话：问题清楚了，用对的模型系统地分析，最后交出能落地的结论。**
+
+你手里有一堆缺陷清单、变更记录、会议纪要，千头万绪。这个 skill 会先压一张问题卡（背景 / 要做的决定 / 怎么算解决），然后从 16 个场景里定位你卡在哪一步——是一句话问题要追根因（5 Why），还是一堆乱材料要归类（归纳法），还是几十个问题只能打一两个（80/20）——跑完分析，交付前还有五句自查：是不是只收集了支持自己的证据。
+
+16 个模型覆盖四步：定义（5 Why、第一性原理）→ 拆解（逻辑树、归纳法、MECE、假设-验证闭环、反事实、80/20）→ 验证决策（证伪、概率思维、换位、逆向、二阶、决策矩阵）→ 收尾（沉没成本、金字塔原理）。
+
+### deep-thinking —— 最后给结论时补上纪律
+
+**一句话：不着急下结论，先把"重构问题、清点假设"走完，再给带置信度的结论。**
+
+你问 AI"这个方案靠谱吗"，它最容易犯的错是张口就来。这个 skill 是 AI 的思考前置层：先区分你问的是表象还是根本问题，再把信息分成事实 / 推断 / 假设 / 观点四类，最后才给结论——并且必须标注哪部分高把握、哪部分低把握、赌了哪几个关键假设、什么新信息出现时该改判。
+
+它还有四个可选工序：多框架拆解、把反方观点讲到反对者本人都点头（Steelman）、推演"然后呢、再然后呢"（二阶后果）、假设结论已经错了倒推原因（Pre-mortem）。
+
+### thinking-suite —— 集合入口，只管指路
+
+**一句话：不确定用哪个 skill 时，问它。**
+
+它不做界定、不做分析、不给结论，只维护一张路由表：你说的是判断题、还是问题没说清、还是要系统分析，它告诉你该找谁。三个 skill 之间的移交规则（谁交棒给谁、交棒时附带什么）也由它说明。
+
+## 🔀 什么情况下用哪个
+
+按顺序判断，命中即停：
+
+| 你的处境 | 找谁 |
+|---|---|
+| 事情本身还说不清：描述模糊、感受和事实混在一起、刚接到别人的交代 | problem-definition |
+| 问题已经清楚，要挖根因 / 理乱材料 / 排优先级 / 验证方案 / 组织汇报 | problem-analysis |
+| 要下判断："该不该 X / X 对不对 / 这个方案靠谱吗 / 你怎么看" | deep-thinking |
+| 只说"帮我分析 X"，没更多限定 | deep-thinking 先接，发现兜不住会自动移交 |
+| "这事怎么跟领导说" | 简短同步找 problem-definition⑧；正式汇报分析成果找 problem-analysis 场景 16 |
+| 不确定找谁 | thinking-suite |
+
+三个 skill 接力时的交棒规则：**problem-definition 界定完，把"现状 + 目标 + 差距 + 影响"的收束句交给 problem-analysis 当问题卡；problem-analysis 填问题卡时如果发现事实还没弄清，退回 problem-definition；最终结论都要带上 deep-thinking 要求的置信度和关键假设。**
+
+## 📦 安装
+
+整库克隆，然后按需复制成员（DeepWorks / opencode 全局安装示例）：
+
+```bash
+git clone https://github.com/guangquan123/thinking-skills
 ```
 
-脚本走 GitHub REST API 推送，绕开本机 git push 到 github.com 被网络重置的问题，并保证远端提交与本地 git 提交 sha 完全一致，可反复增量同步。凭据自动从 git credential manager 读取，脚本不存任何密钥。
+```bash
+# 安装全部四个成员到全局
+cp -r thinking-skills/deep-thinking       ~/.agents/skills/
+cp -r thinking-skills/problem-definition  ~/.agents/skills/
+cp -r thinking-skills/problem-analysis    ~/.agents/skills/
+cp -r thinking-skills/thinking-suite      ~/.agents/skills/
+```
 
-## 历史
+项目级安装则复制到项目的 `.opencode/skills/` 下。Windows 下用资源管理器或 `Copy-Item` 复制即可。也可以只装你需要的一两个成员，每个都能独立工作。
 
-本仓库于 2026-09-28 由三个独立仓库合并而成；原 `deep-thinking`、`problem-definition`、`problem-analysis` 三个独立仓库已归档（archive），版本历史仍可在各自仓库中查看。
+## 🚀 第一次跑
+
+在已加载 skill 的 Agent 里直接说你的事，它会自己路由：
+
+```text
+李总刚说"把最近的客户拜访情况整理一下，周末给我"，我总觉得没说清楚。
+（→ problem-definition 接收信息模式）
+
+手里一堆缺陷清单和变更记录，帮我理出头绪。
+（→ problem-analysis 直接分析模式）
+
+这个数据治理方案你觉得靠谱吗？
+（→ deep-thinking 全流程）
+```
+
+## ⚡ 日常用法
+
+```text
+筛一下这条转述里哪些是真的，哪些是评价。
+用 5 Why 找到第一个没有证据的环节。
+帮我系统分析项目延期，排个处理优先级。
+该不该接这个项目？
+这三个思考 skill 我该用哪个？
+```
+
+## 🛡️ 三个 skill 共同的底线
+
+1. **不编造**：缺数据只写"待确认"，不拿猜测补齐。
+2. **推测必标注**：AI 推断的内容统一写"待核实"。
+3. **事实带出处**：找不到出处的内容只能算印象。
+4. **结论带把握**：不给置信度的结论是不完整的结论。
+
+## 📄 你会得到什么
+
+| 从哪来 | 拿到什么 |
+|---|---|
+| problem-definition | 可核实事实（含出处）、待确认信息、待核实推测、未闭环的一环、收束句、向上同步版本与追问预案 |
+| problem-analysis | 问题卡、走过的模型路径、带把握分的结论、3 条以内关键证据、行动清单（马上做/排期做/顺手做/不做）、验证指标 |
+| deep-thinking | 分置信度的结论、关键假设、重判触发器 |
+| thinking-suite | 路由决策树、歧义裁决表、交接协议说明 |
+
+详细的分工与路由规则，见 [thinking-suite/SKILL.md](thinking-suite/SKILL.md)；路由规则的单一事实来源在 [deep-thinking/SKILL.md](deep-thinking/SKILL.md) 的协作章节。

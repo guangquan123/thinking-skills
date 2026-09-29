@@ -47,7 +47,7 @@ metadata:
 | 模糊不安且有评估对象（"这方案我觉得哪里不对"） | deep-thinking | 对象具体，要评估 |
 | 模糊不安且说不清（"氛围很怪，说不上来"） | problem-definition | 需先还原事实 |
 | "这事怎么跟领导说" | 简短同步 → problem-definition ⑧；正式汇报分析成果 → problem-analysis 场景 16 | 看分析是否已经跑过 |
-| 点名"第一性原理 / 从零推 / break this down" | first-principles-decomposer（集合外协作成员） | 点名模型尊重显式调用，deep-thinking 负责置信度收尾 |
+| 点名"第一性原理 / 从零推 / break this down" | 装了 first-principles-decomposer → 交给它拆，deep-thinking 负责置信度收尾；未装 → deep-thinking 自己按第一性原理拆 | 点名模型尊重显式调用；未装时 deep-thinking 就地承接这一步，不让请求落空 |
 
 ## 交接协议
 

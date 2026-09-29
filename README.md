@@ -14,21 +14,21 @@
 
 | 技能 | 干什么 | 什么时候用 |
 |-|-|-|
-| ⚖️ **deep-thinking** | 把一件事想透 | **默认入口**。想弄明白一件事、要下判断，先用它 |
-| 🔍 **problem-definition** | 弄清到底发生了什么 | 需求说得含糊，不知道该问什么 |
-| 📊 **problem-analysis** | 一堆材料整理成能行动的结论 | 挖根因、排优先级、验证方案 |
-| 🚦 **thinking-suite** | 告诉你该用哪个 | 分不清的时候 |
+| **deep-thinking** | 把一件事想透 | **默认入口**。想弄明白一件事、要下判断，先用它 |
+| **problem-definition** | 弄清到底发生了什么 | 需求说得含糊，不知道该问什么 |
+| **problem-analysis** | 一堆材料整理成能行动的结论 | 挖根因、排优先级、验证方案 |
+| **thinking-suite** | 告诉你该用哪个 | 分不清的时候 |
 
 配合方式：默认从 deep-thinking 开始；它发现需求没说清，先让 problem-definition 问明白；发现材料要系统整理，交给 problem-analysis。
 
 ```mermaid
 flowchart TD
-    A["你有一件事想弄清楚"] --> D["⚖️ deep-thinking<br/>默认从这开始"]
-    D -- "需求没说清" --> C["🔍 problem-definition<br/>先问明白"]
-    D -- "材料一堆要整理" --> E["📊 problem-analysis<br/>系统整理"]
+    A["你有一件事想弄清楚"] --> D["deep-thinking<br/>默认从这开始"]
+    D -- "需求没说清" --> C["problem-definition<br/>先问明白"]
+    D -- "材料一堆要整理" --> E["problem-analysis<br/>系统整理"]
     C --> D
     E --> D
-    F["不知道用哪个"] --> H["🚦 thinking-suite<br/>告诉你"]
+    F["不知道用哪个"] --> H["thinking-suite<br/>告诉你"]
 ```
 
 ---
@@ -126,12 +126,44 @@ flowchart TD
 
 ## 三、安装与上手
 
-### 安装：一句话
+### 放哪：技能目录里
+
+技能遵循 [Agent Skills](https://agentskills.io) 开放标准：一个文件夹加一个 `SKILL.md`。放进技能目录就自动被发现，不用注册。
+
+全局装（这台机器上所有项目都能用）：把技能文件夹复制进用户级目录。`~` 是用户主目录，Windows 上是 `C:\Users\你的用户名`。
+
+| 你用的工具 | 用户级技能目录 |
+| - | - |
+| 拿不准 / 通用 | `~/.agents/skills/`，开放标准目录，Cursor、DeepWorks 都读 |
+| Cursor | `~/.agents/skills/` 或 `~/.cursor/skills/` |
+| Claude Code | `~/.claude/skills/` |
+| DeepWorks / opencode | 全局用 `~/.agents/skills/`；只在某个项目里用，放项目里的 `.opencode/skills/` |
+
+只想给一个项目用：复制进项目里的 `.agents/skills/`（Claude Code 是 `.claude/skills/`），随仓库提交，整个团队共享。
+
+装好后长这样：
+
+```text
+~/.agents/skills/
+└── deep-thinking/
+    └── SKILL.md
+```
+
+### 装几个：各自独立，按需装
+
+四个技能互不依赖，装一个用一个：
+
+- 只要下判断时先想清楚——装 `deep-thinking` 就够。
+- 常接含糊需求、别人转述——装 `problem-definition`。
+- 常对着一堆材料理头绪——装 `problem-analysis`。
+- 想让 AI 自己分辨该用哪个、帮忙转接路由——四个全装，`thinking-suite` 负责指路。
+
+### 安装：一句话交给 AI
 
 你的 AI 能执行命令（DeepWorks、Claude Code、Cursor 等），就把这句话发给它：
 
 ```text
-请克隆 https://github.com/guangquan123/thinking-skills，把里面的技能装到你的技能目录
+请克隆 https://github.com/guangquan123/thinking-skills，把里面的技能装到我的技能目录
 ```
 
 只装需要的：
@@ -140,7 +172,7 @@ flowchart TD
 请从 https://github.com/guangquan123/thinking-skills 只安装 deep-thinking 和 problem-analysis
 ```
 
-手动装：克隆仓库后把需要的文件夹复制到 `~/.agents/skills/`。Windows 用资源管理器复制。
+手动装：克隆仓库，把要的文件夹整个复制进上表的技能目录。Windows 直接用资源管理器复制粘贴。
 
 ### 上手：大白话直接说事
 
@@ -152,11 +184,28 @@ flowchart TD
 手里一堆缺陷清单和变更记录，帮我理出头绪。 → problem-analysis
 ```
 
+### 验证装好了没有
+
+新开一个会话，丢一句：
+
+```text
+这个方案靠谱吗？
+```
+
+技能生效时，AI 的回答里会同时出现四样：
+
+- 结论——明确说靠谱或不靠谱，不和稀泥
+- 把握——给高中低或百分比，不是含糊的"看情况"
+- 押的前提——说清结论建立在什么没验证的假设上，假设不成立就推翻
+- 重算条件——出现什么情况要回来重想
+
+四样齐了，装好了。回答还是泛泛的利弊清单，多半是文件夹没放对：检查技能目录里有没有以技能名命名的文件夹、`SKILL.md` 是不是直接在那个文件夹下。
+
 ---
 
 ## 四、四个技能详解
 
-### ⚖️ deep-thinking：把一件事想透
+### deep-thinking：把一件事想透
 
 你丢给它一个判断、一个选择、一个看不明白的局面，它按五步想完再答：
 
@@ -177,7 +226,7 @@ flowchart TD
 
 **你可以说**："这个方案靠谱吗" "该不该接这个项目" "这个判断成立吗" "深度思考一下 X"。
 
-### 🔍 problem-definition：先弄清发生了什么
+### problem-definition：先弄清发生了什么
 
 接到含糊交代、别人转述、说不清的一句话时，它先弄清"到底发生了什么"。问题弄错，干得越快浪费越大。
 
@@ -196,7 +245,7 @@ flowchart TD
 
 **你可以说**："老板让我做 X，感觉没说清楚" "帮我筛一下这条转述" "用 5 Why 追一下原因" "这事怎么跟领导说"。
 
-### 📊 problem-analysis：把材料整理成能行动的结论
+### problem-analysis：把材料整理成能行动的结论
 
 问题清楚了，但材料一堆、千头万绪。它按"场景配模型"做系统分析，最后给你一张能直接照着干的分析卡。
 
@@ -224,7 +273,7 @@ flowchart TD
 
 **你可以说**："帮我理出头绪" "找到根因" "先做哪个" "用决策矩阵排一下" "帮我把分析组织成汇报"。
 
-### 🚦 thinking-suite：告诉你用哪个
+### thinking-suite：告诉你用哪个
 
 分不清用哪个时把问题丢给它。它告诉你找谁、为什么。它自己不分析问题。
 

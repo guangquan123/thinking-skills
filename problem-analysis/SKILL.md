@@ -24,7 +24,7 @@ description: |
   不用于简单是非判断与快速观点（走 deep-thinking）、纯事实查询、明确指令执行、
   创意发散/头脑风暴、情感陪伴。属于 thinking-suite 思维模型集合：问题本身没界定清楚时先走 problem-definition，集合总览见 thinking-suite。
 metadata:
-  author: "deepworks-user-2fqhuw"
+  author: "guangquan123"
 ---
 
 # 分析问题的思维模型（16 个场景）

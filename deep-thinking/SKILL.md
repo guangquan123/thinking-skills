@@ -18,7 +18,7 @@ description: |
 
   属于 thinking-suite 思维模型集合：系统分析走 problem-analysis，问题界定走 problem-definition，集合总览与路由规则见 thinking-suite。
 metadata:
-  author: "deepworks-user-2fqhuw"
+  author: "guangquan123"
 ---
 
 # 深度思考技能 (Deep Thinking)

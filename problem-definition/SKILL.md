@@ -12,7 +12,7 @@ description: |
 
   属于 thinking-suite 思维模型集合：本 skill 只界定、不分析；系统分析走 problem-analysis，轻量判断走 deep-thinking，集合总览见 thinking-suite。
 metadata:
-  author: "deepworks-user-2fqhuw"
+  author: "guangquan123"
 ---
 
 # 界定问题思维模型（Problem Framing）

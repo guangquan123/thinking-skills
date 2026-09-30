@@ -10,7 +10,7 @@ description: |
   - "帮我想清楚一件事"（未指明界定还是分析时，本 skill 负责路由）
   - "界定问题和分析问题什么关系 / 这三个 skill 怎么分工"
 metadata:
-  author: "deepworks-user-2fqhuw"
+  author: "guangquan123"
 ---
 
 # 思维模型集合（thinking-suite）
